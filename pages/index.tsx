@@ -1,17 +1,7 @@
 import {GetServerSideProps, GetStaticProps} from "next";
 
-export default function Home({repositories, date}: any) {
-  return (
-    <>
-      <h1>{date}</h1>
-      <ul>
-        <h1>hello world</h1>
-        {repositories.map((repo: any) => (
-          <li key={repo}>{repo}</li>
-        ))}
-      </ul>
-    </>
-  );
+export default function Home({date}: any) {
+  return <h1>{date}</h1>
 }
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -21,9 +11,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      repositories: repositoryNames,
       date: new Date().toISOString(),
     },
-    revalidate: 5 // every 5 minutes, the page provided when a user access the endpoint will be updated
+    revalidate: 5 // every 5 minutes, the page provided when a user access the endpoint will be updated *preview only works on "build" mode
   };
 };
