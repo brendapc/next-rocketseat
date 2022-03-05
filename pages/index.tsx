@@ -1,18 +1,20 @@
-import {GetServerSideProps} from "next";
+import {GetServerSideProps, GetStaticProps} from "next";
 
-export default function Home({repositories}) {
-  console.log(repositories);
+export default function Home({repositories, date}: any) {
   return (
-    <ul>
-      <h1>hello world</h1>
-      {repositories.map((repo: any) => (
-        <li key={repo}>{repo}</li>
-      ))}
-    </ul>
+    <>
+      <h1>{date}</h1>
+      <ul>
+        <h1>hello world</h1>
+        {repositories.map((repo: any) => (
+          <li key={repo}>{repo}</li>
+        ))}
+      </ul>
+    </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch("http://api.github.com/users/brendapc/repos");
   const data = await response.json();
   const repositoryNames = data.map((item: any) => item.name);
@@ -20,6 +22,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       repositories: repositoryNames,
+      date: new Date().toISOString(),
     },
+    revalidate: 5
   };
 };
