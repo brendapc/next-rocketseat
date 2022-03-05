@@ -24,6 +24,6 @@ export const getStaticProps: GetStaticProps = async () => {
       repositories: repositoryNames,
       date: new Date().toISOString(),
     },
-    revalidate: 5
+    revalidate: 5 // every 5 minutes, the page provided when a user access the endpoint will be updated
   };
 };
